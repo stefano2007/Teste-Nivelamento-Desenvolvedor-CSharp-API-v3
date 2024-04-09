@@ -20,7 +20,7 @@ public class CustomExceptionFilter : IExceptionFilter
                 context.Result = new BadRequestObjectResult(new CustomErro(mensagem: context.Exception.Message, tipoException: TipoException.BAD_REQUEST));
                 break;
             default:
-                context.Result = new BadRequestObjectResult(new CustomErro(mensagem: "Ocorreu um erro desconhecido", tipoException: TipoException.BAD_REQUEST));
+                context.Result = new BadRequestObjectResult(new CustomErro(mensagem: "Ocorreu um erro desconhecido", tipoException: TipoException.INTERNAL_SERVER_ERROR));
             break;
         };
     }

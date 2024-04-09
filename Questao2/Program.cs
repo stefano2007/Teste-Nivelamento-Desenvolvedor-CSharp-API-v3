@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Net.Http;
-using System.Net.Http.Json;
+﻿using System.Net.Http.Json;
 
 public class Program
 {
@@ -22,12 +20,11 @@ public class Program
         // Team Paris Saint - Germain scored 109 goals in 2013
         // Team Chelsea scored 92 goals in 2014
     }
-
     public static int getTotalScoredGoals(string team, int year)
     {
-        return requestAPILoop("team1", team, year) + requestAPILoop("team2", team, year);
+        return requestAPILoop("team1", team, year) 
+             + requestAPILoop("team2", team, year);
     }
-
     public static int requestAPILoop(string filterTeam, string team, int year)
     {
         int totalGoals = 0;
@@ -55,7 +52,6 @@ public class Program
             return await httpClient.GetFromJsonAsync<FootballMatchesPage>(url);
         }
     }
-
     public class FootballMatchesPage
     {
         public int Page { get; set; }

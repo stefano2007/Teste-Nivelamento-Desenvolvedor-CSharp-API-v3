@@ -21,7 +21,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Questao5", "Questao5\Questa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{35A979E6-89DA-42C3-BD24-F36B2A6E78B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Questao5.Tests", "Questao5.Tests\Questao5.Tests.csproj", "{6A6F499D-77F4-4456-9DB6-B55901B7DD82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Questao5.Tests", "Questao5.Tests\Questao5.Tests.csproj", "{6A6F499D-77F4-4456-9DB6-B55901B7DD82}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "README", "README", "{76FAF8CE-4D14-48FB-8A59-E57F97825613}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
