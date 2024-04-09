@@ -2,7 +2,7 @@
 using Questao5.Domain.Enumerators;
 using System.Data;
 
-namespace Questao5.Infrastructure.Database.Repository;
+namespace Questao5.Infrastructure.Sqlite;
 
 //Classe para configura tipo customizados devido as limitações do SQLite
 //referencia: https://learn.microsoft.com/en-us/dotnet/standard/data/sqlite/dapper-limitations
@@ -17,9 +17,6 @@ public class DateTimeHandler : SqliteTypeHandler<DateTime>
 {
     public override DateTime Parse(object value)
         => DateTime.Parse((string)value);
-
-    public override void SetValue(IDbDataParameter parameter, DateTime value)
-        => parameter.Value = value.ToString("dd/MM/yyyy HH:mm:ss");
 }
 
 public class GuidHandler : SqliteTypeHandler<Guid>

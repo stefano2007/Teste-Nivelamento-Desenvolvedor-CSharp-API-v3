@@ -1,9 +1,10 @@
 ﻿using MediatR;
 using Questao5.Application.Commands.Requests;
 using Questao5.Application.Commands.Responses;
+using Questao5.Application.Queries.Responses;
 using Questao5.Domain.Entities;
 using Questao5.Domain.Extensions;
-using Questao5.Domain.Validation;
+using Questao5.Domain.Validations;
 using Questao5.Infrastructure.Database.Interfaces;
 
 namespace Questao5.Application.Handlers;
@@ -31,13 +32,18 @@ public class MovimentoCreateCommandHandler : IRequestHandler<MovimentoCreateComm
         var idempotencia = await _idempotenciaRepository.BuscarPorChaveIdempotencia(request.IdRequisicao);
         if (idempotencia is not null && !string.IsNullOrEmpty(idempotencia.Resultado))
         {
-            return idempotencia.Resultado.ToObjetoByJson<MovimentoCreateResponse>();
+            var movimentoResponse = idempotencia.Requisicao.ToObjetoByJson<MovimentoCreateCommand>();
+            if (request.Equals(movimentoResponse))
+            {
+                return idempotencia.Resultado.ToObjetoByJson<MovimentoCreateResponse>();
+            }
+            throw new InvalidOperationException("Operação abortada, o Id Requisição já foi processado com corpo da requisão diferente");
         }
 
         // validações interna da entidade
         var motivo = new Movimento(idContaCorrente: request.IdContaCorrente, tipoMovimento: request.TipoMovimento, valor: request.Valor);
 
-        var contaCorrente = await _contaCorrenteRepository.BuscarPorIdContaCorrente(request.IdContaCorrente, incluirMovimentos: true)
+        var contaCorrente = await _contaCorrenteRepository.BuscarPorIdContaCorrente(request.IdContaCorrente, incluirMovimentos: false)
             ?? throw new InvalidAccountException("Apenas contas correntes cadastradas podem receber movimentação");
 
         if (!contaCorrente.Ativo)
@@ -64,7 +70,7 @@ public class MovimentoCreateCommandHandler : IRequestHandler<MovimentoCreateComm
         }
         catch (Exception)
         {
-            throw new Exception("Ocorreu um erro ao persistir a resposta");
+            throw new Exception("Ocorreu um erro ao persistir a Idempotencia");
         }
     }
 

@@ -25,8 +25,7 @@ public class ContaCorrenteRepository : IContaCorrenteRepository
 
         if (contaCorrente is not null && incluirMovimentos)
         {
-            var movimentos = await _movimentoRepository.BuscarTodosPorIdContaCorrente(contaCorrente.IdContaCorrente) 
-                ?? new List<Movimento>();
+            var movimentos = await _movimentoRepository.BuscarTodosPorIdContaCorrente(contaCorrente.IdContaCorrente);
 
             contaCorrente.SetMovimentos(movimentos);
         }

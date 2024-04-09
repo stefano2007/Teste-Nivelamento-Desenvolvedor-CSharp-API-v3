@@ -23,7 +23,7 @@ public class ContaCorrenteController : ControllerBase
     /// Movimentação de uma conta corrente
     /// </summary>
     /// <param name="idContaCorrente">Identificação da conta corrente</param>
-    /// <param name="movimentoCreate">Objeto de criação da movimentação: Identificação da requisição, Valor a ser movimentado e Tipo de movimento (C = Credito, D = Débito)</param>
+    /// <param name="movimentoCreate">Objeto de criação da movimentação: Identificador único da requisição, Valor a ser movimentado e Tipo de movimento (C = Credito, D = Débito)</param>
     /// <returns></returns>
     [HttpPost("{idContaCorrente}/movimentar")]
     [Produces("application/json")]

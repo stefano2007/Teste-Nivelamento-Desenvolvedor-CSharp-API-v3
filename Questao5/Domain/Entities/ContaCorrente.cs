@@ -3,10 +3,7 @@
 namespace Questao5.Domain.Entities;
 public class ContaCorrente
 {
-    public ContaCorrente()
-    {
-        
-    }
+    public ContaCorrente() { }
     public ContaCorrente(Guid idContaCorrente, int numero, string nome)
     {
         ValidateDomain(idContaCorrente, numero, nome);
@@ -25,41 +22,25 @@ public class ContaCorrente
     public IEnumerable<Movimento> Movimentos { get => _movimentos; }    
     public void SetMovimentos(IEnumerable<Movimento> movimentos) => _movimentos = movimentos;
 
-    /*
-    idcontacorrente TEXT(37) PRIMARY KEY, -- id da conta corrente
-	    numero INTEGER(10) NOT NULL UNIQUE*, -- numero da conta corrente
-	    nome TEXT(100) NOT NULL, -- nome do titular da conta corrente
-	    ativo INTEGER(1) NOT NULL default 0, -- indicativo se a conta esta ativa. (0 = inativa, 1 = ativa).
-	    CHECK (ativo in (0,1)*
-     */
-
     public double SaldoContaCorrente()
     {
         _movimentos ??= new List<Movimento>();
         return _movimentos
-            .Sum(mov => mov.TipoMovimento.Equals("D")
+            .Sum(mov => mov.EhDebito()
                 ? mov.Valor * -1
                 : mov.Valor
             );
     }
-
     public void ValidateDomain(Guid idContaCorrente, int numero, string nome)
     {
-        /*
-        DomainExceptionValidation.When(string.IsNullOrEmpty(idContaCorrente),
-            "Invalid Id Conta Corrente is requerid");
-
-        DomainExceptionValidation.When(idContaCorrente.Length > 37,
-            "Invalid Id Conta Corrente maximum de 37 caracters");
-        */
         DomainExceptionValidation.When(numero <= 0,
-            "Invalid Valor is requerid");
+            "O Numero é requerido");
 
         DomainExceptionValidation.When(string.IsNullOrEmpty(nome),
-            "Invalid Nome is requerid");
+            "O Nome é requerido");
 
         DomainExceptionValidation.When(nome.Length > 100,
-            "Invalid Nome maximum de 100 caracters");
+            "O Nome deve ter no máximo 100 caracteres");
 
         IdContaCorrente = idContaCorrente;
         Numero = numero;

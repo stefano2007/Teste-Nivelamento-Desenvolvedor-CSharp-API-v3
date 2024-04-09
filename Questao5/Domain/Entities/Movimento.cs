@@ -1,15 +1,11 @@
 ﻿using Questao5.Domain.Enumerators;
-using Questao5.Domain.Validation;
 using Questao5.Domain.Validations;
 
 namespace Questao5.Domain.Entities;
 public class Movimento
 {
-    public Movimento()
-    {
-        
-    }
-    public Movimento(Guid idContaCorrente, char tipoMovimento, double valor)
+    public Movimento() { }
+    public Movimento(Guid idContaCorrente, string tipoMovimento, double valor)
     {
         ValidateDomain(idContaCorrente, tipoMovimento, valor);
         DataMovimento = DateTime.Now;
@@ -18,11 +14,11 @@ public class Movimento
     public Guid IdMovimento { get; private set; }
     public Guid IdContaCorrente { get; private set; }
     public DateTime DataMovimento { get; private set; }
-    public string TipoMovimento { get; private set; }
+    public TipoMovimento TipoMovimento { get; private set; }
     public double Valor { get; private set; }
+    public bool EhDebito () => TipoMovimento.Equals(Enumerators.TipoMovimento.Debito);
     public ContaCorrente ContaCorrente { get; private set; }
-
-    private void ValidateDomain(Guid idContaCorrente, char tipoMovimento, double valor)
+    private void ValidateDomain(Guid idContaCorrente, string tipoMovimento, double valor)
     {
         if (valor <= 0)
         {
@@ -30,24 +26,22 @@ public class Movimento
         }
 
         TipoMovimento tipoMovimentoEnum;
+        const string erroTipoMovimento = "Apenas os tipos D=“débito” ou C=“crédito” podem ser aceitos";
         try
         {
-            tipoMovimentoEnum = (Enumerators.TipoMovimento) tipoMovimento;
+            tipoMovimentoEnum = (Enumerators.TipoMovimento) Convert.ToChar(tipoMovimento);
         }
         catch
         {
-            throw new InvalidTypeException("Apenas os tipos “débito” ou “crédito” podem ser aceitos");
+            throw new InvalidTypeException(erroTipoMovimento);
         }
         if (tipoMovimentoEnum != Enumerators.TipoMovimento.Credito && tipoMovimentoEnum != Enumerators.TipoMovimento.Debito)
         {
-            throw new InvalidTypeException("Apenas os tipos “débito” ou “crédito” podem ser aceitos");
+            throw new InvalidTypeException(erroTipoMovimento);
         }
-
-        DomainExceptionValidation.When(valor <= 0,
-            "Invalid Valor is requerid");
         
         IdContaCorrente = idContaCorrente;
-        TipoMovimento = tipoMovimento.ToString();//TODO: Resolver Enum
+        TipoMovimento = tipoMovimentoEnum;
         Valor = valor;
     }
 }

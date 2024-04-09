@@ -12,7 +12,6 @@ public class IdempotenciaRepository : IIdempotenciaRepository
     {
         _databaseConfig = databaseConfig;
     }
-
     public async Task<Idempotencia> BuscarPorChaveIdempotencia(Guid chaveIdempotencia)
     {
         using var connection = new SqliteConnection(_databaseConfig.Name);
@@ -21,7 +20,6 @@ public class IdempotenciaRepository : IIdempotenciaRepository
         var param = new { chaveIdempotencia };
         return await connection.QuerySingleOrDefaultAsync<Idempotencia>(sql, param);
     }
-
     public async Task<Idempotencia> Salvar(Idempotencia idempotencia)
     {
         using var connection = new SqliteConnection(_databaseConfig.Name);

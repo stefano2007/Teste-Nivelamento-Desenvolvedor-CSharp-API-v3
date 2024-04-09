@@ -1,4 +1,4 @@
-﻿using Questao5.Domain.Validation;
+﻿using Questao5.Domain.Validations;
 using Questao5.Domain.Enumerators;
 
 namespace Questao5.Domain.Validations;

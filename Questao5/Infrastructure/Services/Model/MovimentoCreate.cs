@@ -8,5 +8,5 @@ public class MovimentoCreate
     [Required]
     public double Valor { get; set; }
     [Required]
-    public char TipoMovimento { get; set; }
+    public string TipoMovimento { get; set; }
 }

@@ -11,12 +11,7 @@ public static class DependencyInjection
         services.AddScoped<IContaCorrenteRepository, ContaCorrenteRepository>();
         services.AddScoped<IMovimentoRepository, MovimentoRepository>();
         services.AddScoped<IIdempotenciaRepository, IdempotenciaRepository>();
-
-        SqlMapper.AddTypeHandler(new TipoMovimentoTypeHandler());
-        SqlMapper.AddTypeHandler(new DateTimeHandler());
-        SqlMapper.AddTypeHandler(new GuidHandler());
-
-        
+       
         return services;
     }
 }

@@ -5,5 +5,7 @@ public enum TipoException
     INACTIVE_ACCOUNT = 1,
     INVALID_VALUE = 2,
     INVALID_TYPE = 3,
-    DOMAIN_EXCEPTION = 4
+    DOMAIN_EXCEPTION = 4,
+    BAD_REQUEST = 5,
+    INTERNAL_SERVER_ERROR = 6
 }
